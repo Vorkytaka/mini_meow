@@ -7,15 +7,19 @@ import 'package:mini_meow/game/limit_spawner_component.dart';
 import 'package:mini_meow/game/target.dart';
 
 class MeowGame extends FlameGame {
+  late Rectangle area;
+
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
 
+    area = Rectangle.fromLTWH(0, 0, size.x, size.y);
+
     await images.load('mouse.png');
 
     final spawner = LimitedSpawnerComponent(
-      maxCount: 3,
-      area: Rectangle.fromLTWH(0, 0, size.x, size.y),
+      maxCount: 10,
+      area: area,
       factory: () => Target(),
     );
 

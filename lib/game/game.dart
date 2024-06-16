@@ -17,7 +17,12 @@ class MeowGame extends FlameGame {
     area = Rectangle.fromLTWH(0, 0, size.x, size.y);
 
     await images.load('mouse.png');
-    await FlameAudio.audioCache.load('mouse_1.mp3');
+    await FlameAudio.audioCache.loadAll([
+      'mouse_background.mp3',
+      'mouse_1.mp3',
+    ]);
+
+    await FlameAudio.loopLongAudio('mouse_background.mp3');
 
     final spawner = LimitedSpawnerComponent(
       maxCount: 10,

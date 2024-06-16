@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/animation.dart';
 import 'package:mini_meow/game/game.dart';
 
@@ -35,6 +36,7 @@ class Target extends SpriteComponent
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
 
+    FlameAudio.play('mouse_1.mp3');
     removeFromParent();
   }
 

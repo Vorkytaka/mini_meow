@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_meow/game/limit_spawner_component.dart';
 import 'package:mini_meow/game/target.dart';
@@ -16,6 +17,7 @@ class MeowGame extends FlameGame {
     area = Rectangle.fromLTWH(0, 0, size.x, size.y);
 
     await images.load('mouse.png');
+    await FlameAudio.audioCache.load('mouse_1.mp3');
 
     final spawner = LimitedSpawnerComponent(
       maxCount: 10,

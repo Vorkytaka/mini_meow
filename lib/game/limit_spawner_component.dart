@@ -20,10 +20,8 @@ class LimitedSpawnerComponent extends Component {
 
   @override
   Future<void>? onLoad() async {
-    for (int i = 0; i < maxCount; i++) {
-      _spawnComponent();
-    }
-    return super.onLoad();
+    _fillComponents();
+    super.onLoad();
   }
 
   @override
@@ -31,10 +29,14 @@ class LimitedSpawnerComponent extends Component {
     super.update(dt);
 
     // Remove any component that is no longer on the game (deleted)
-    _spawnedComponents.removeWhere(
-      (component) => component.isMounted == false || component.isRemoving,
-    );
+    _spawnedComponents.removeWhere((component) {
+      return !component.isMounted || component.isRemoving;
+    });
 
+    _fillComponents();
+  }
+
+  void _fillComponents() {
     // Ensure there are always maxCount components
     while (_spawnedComponents.length < maxCount) {
       _spawnComponent();

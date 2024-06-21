@@ -13,6 +13,8 @@ import 'package:wakelock/wakelock.dart';
 class MeowGame extends FlameGame {
   late Rectangle area;
 
+  static const double targetWidth = 200;
+
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
@@ -21,7 +23,11 @@ class MeowGame extends FlameGame {
 
     area = Rectangle.fromLTWH(0, 0, size.x, size.y);
 
-    await images.load('mouse.png');
+    final targetSprite = await images.load('mouse.png');
+    final targetAspectRatio = targetSprite.height / targetSprite.width;
+    final targetHeight = targetWidth * targetAspectRatio;
+    final targetSize = Vector2(targetWidth, targetHeight);
+
     await FlameAudio.audioCache.loadAll([
       'mouse_background.mp3',
       'mouse_1.mp3',
@@ -32,7 +38,10 @@ class MeowGame extends FlameGame {
     final spawner = LimitedSpawnerComponent(
       maxCount: 1,
       area: area,
-      factory: () => Target(),
+      targetSize: targetSize,
+      factory: () => Target(
+        size: targetSize,
+      ),
     );
 
     add(spawner);

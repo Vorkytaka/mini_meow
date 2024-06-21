@@ -8,6 +8,7 @@ class LimitedSpawnerComponent extends Component {
   final int maxCount;
   final PositionComponent Function() factory;
   final Rectangle area;
+  final double targetBiggestSide;
 
   final Random _random;
   final List<PositionComponent> _spawnedComponents = [];
@@ -16,7 +17,9 @@ class LimitedSpawnerComponent extends Component {
     required this.maxCount,
     required this.factory,
     required this.area,
-  }) : _random = Random();
+    required Vector2 targetSize,
+  })  : _random = Random(),
+        targetBiggestSide = max(targetSize.x, targetSize.y);
 
   @override
   Future<void>? onLoad() async {
@@ -47,14 +50,14 @@ class LimitedSpawnerComponent extends Component {
     final component = factory();
     Vector2 pos = area.randomPoint(random: _random, within: false);
 
-    if(pos.x == 0) {
-      pos = Vector2(pos.x - 50, pos.y);
-    } else if(pos.x == area.width) {
-      pos = Vector2(pos.x + 50, pos.y);
-    } else if(pos.y == 0) {
-      pos = Vector2(pos.x, pos.y - 50);
-    } else if(pos.y == area.height) {
-      pos = Vector2(pos.x, pos.y + 50);
+    if (pos.x == 0) {
+      pos = Vector2(pos.x - targetBiggestSide, pos.y);
+    } else if (pos.x == area.width) {
+      pos = Vector2(pos.x + targetBiggestSide, pos.y);
+    } else if (pos.y == 0) {
+      pos = Vector2(pos.x, pos.y - targetBiggestSide);
+    } else if (pos.y == area.height) {
+      pos = Vector2(pos.x, pos.y + targetBiggestSide);
     }
 
     component.position = pos;

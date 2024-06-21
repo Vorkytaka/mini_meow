@@ -10,10 +10,10 @@ import 'package:mini_meow/game/game.dart';
 
 class Target extends SpriteComponent
     with HasGameReference<MeowGame>, TapCallbacks {
-  Target()
-      : super(
+  Target({
+    required super.size,
+  }) : super(
           anchor: Anchor.center,
-          size: Vector2(99.5, 47),
         );
 
   final _moveController = EffectController(

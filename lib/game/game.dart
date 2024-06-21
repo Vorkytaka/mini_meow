@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:mini_meow/game/target.dart';
 import 'package:wakelock/wakelock.dart';
 
 class MeowGame extends FlameGame {
+  late Bgm audioBgm;
   late Rectangle area;
 
   static const double targetWidth = 200;
@@ -20,6 +22,7 @@ class MeowGame extends FlameGame {
     super.onLoad();
     Flame.device.fullScreen();
     Wakelock.enable();
+    audioBgm = Bgm(audioCache: FlameAudio.audioCache);
     FlameAudio.bgm.initialize();
 
     area = Rectangle.fromLTWH(0, 0, size.x, size.y);
@@ -34,7 +37,7 @@ class MeowGame extends FlameGame {
       'mouse_1.mp3',
     ]);
 
-    await FlameAudio.bgm.play('mouse_background.mp3');
+    await audioBgm.play('mouse_background.mp3');
 
     final spawner = LimitedSpawnerComponent(
       maxCount: 1,
@@ -52,7 +55,7 @@ class MeowGame extends FlameGame {
   void onDispose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     Wakelock.disable();
-    FlameAudio.bgm.dispose();
+    audioBgm.dispose();
   }
 
   @override

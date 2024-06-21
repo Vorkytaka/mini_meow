@@ -7,7 +7,7 @@ import 'package:flame/experimental.dart';
 class LimitedSpawnerComponent extends Component {
   final int maxCount;
   final PositionComponent Function() factory;
-  final Shape area;
+  final Rectangle area;
 
   final Random _random;
   final List<PositionComponent> _spawnedComponents = [];
@@ -45,7 +45,19 @@ class LimitedSpawnerComponent extends Component {
 
   void _spawnComponent() {
     final component = factory();
-    component.position = area.randomPoint(random: _random);
+    Vector2 pos = area.randomPoint(random: _random, within: false);
+
+    if(pos.x == 0) {
+      pos = Vector2(pos.x - 50, pos.y);
+    } else if(pos.x == area.width) {
+      pos = Vector2(pos.x + 50, pos.y);
+    } else if(pos.y == 0) {
+      pos = Vector2(pos.x, pos.y - 50);
+    } else if(pos.y == area.height) {
+      pos = Vector2(pos.x, pos.y + 50);
+    }
+
+    component.position = pos;
     _spawnedComponents.add(component);
     parent?.add(component);
   }

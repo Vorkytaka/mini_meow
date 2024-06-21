@@ -7,6 +7,7 @@ import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mini_meow/game/hud.dart';
 import 'package:mini_meow/game/limit_spawner_component.dart';
 import 'package:mini_meow/game/target.dart';
 import 'package:wakelock/wakelock.dart';
@@ -49,6 +50,7 @@ class MeowGame extends FlameGame {
     );
 
     add(spawner);
+    add(HudComponent());
   }
 
   @override

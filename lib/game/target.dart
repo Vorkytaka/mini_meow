@@ -54,12 +54,6 @@ class Target extends SpriteComponent
       ),
     );
 
-    // TODO: Подумой
-    // Calculate the angle
-    // final deltaX = moveTo.x - position.x;
-    // final deltaY = moveTo.y - position.y;
-    // double angle = atan2(deltaY, deltaX);
-
     final angleDiff = angleToTarget(position, moveTo, angle);
 
     add(

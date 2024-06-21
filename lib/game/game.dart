@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:flame/experimental.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mini_meow/game/limit_spawner_component.dart';
 import 'package:mini_meow/game/target.dart';
+import 'package:wakelock/wakelock.dart';
 
 class MeowGame extends FlameGame {
   late Rectangle area;
@@ -13,6 +16,8 @@ class MeowGame extends FlameGame {
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
+    Flame.device.fullScreen();
+    Wakelock.enable();
 
     area = Rectangle.fromLTWH(0, 0, size.x, size.y);
 
@@ -31,6 +36,12 @@ class MeowGame extends FlameGame {
     );
 
     add(spawner);
+  }
+
+  @override
+  void onDispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    Wakelock.disable();
   }
 
   @override

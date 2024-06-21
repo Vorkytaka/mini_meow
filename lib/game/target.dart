@@ -14,7 +14,6 @@ class Target extends SpriteComponent
       : super(
           anchor: Anchor.center,
           size: Vector2(99.5, 47),
-          // angle: 1,
         );
 
   final _moveController = EffectController(

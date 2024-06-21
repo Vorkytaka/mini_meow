@@ -20,6 +20,7 @@ class MeowGame extends FlameGame {
     super.onLoad();
     Flame.device.fullScreen();
     Wakelock.enable();
+    FlameAudio.bgm.initialize();
 
     area = Rectangle.fromLTWH(0, 0, size.x, size.y);
 
@@ -33,7 +34,7 @@ class MeowGame extends FlameGame {
       'mouse_1.mp3',
     ]);
 
-    await FlameAudio.loopLongAudio('mouse_background.mp3');
+    await FlameAudio.bgm.play('mouse_background.mp3');
 
     final spawner = LimitedSpawnerComponent(
       maxCount: 1,
@@ -51,6 +52,7 @@ class MeowGame extends FlameGame {
   void onDispose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     Wakelock.disable();
+    FlameAudio.bgm.dispose();
   }
 
   @override

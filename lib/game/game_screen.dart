@@ -20,12 +20,12 @@ class GameScreen extends StatelessWidget {
               child: SizedBox(
                 height: 100,
                 child: Material(
-                  color: Colors.blue.shade100.withOpacity(0.5),
+                  color: Colors.blue.shade900.withOpacity(0.5),
                   child: Center(
                     child: Text(
                       'Hold 5 sec for exit',
                       style: theme.textTheme.displayLarge?.copyWith(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

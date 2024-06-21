@@ -25,7 +25,7 @@ class MeowGame extends FlameGame {
     await FlameAudio.loopLongAudio('mouse_background.mp3');
 
     final spawner = LimitedSpawnerComponent(
-      maxCount: 10,
+      maxCount: 1,
       area: area,
       factory: () => Target(),
     );

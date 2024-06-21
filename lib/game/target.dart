@@ -18,10 +18,12 @@ class Target extends SpriteComponent
         );
 
   final _moveController = EffectController(
-    speed: 100,
+    speed: 200,
     curve: Curves.easeInOut,
   );
-  final _rotateController = EffectController(duration: 1);
+  final _rotateController = EffectController(
+    duration: 0.4,
+  );
 
   @override
   FutureOr<void> onLoad() async {
@@ -54,15 +56,30 @@ class Target extends SpriteComponent
 
     // TODO: Подумой
     // Calculate the angle
-    final deltaX = moveTo.x - position.x;
-    final deltaY = moveTo.y - position.y;
-    final angle = atan2(deltaY, deltaX);
+    // final deltaX = moveTo.x - position.x;
+    // final deltaY = moveTo.y - position.y;
+    // double angle = atan2(deltaY, deltaX);
+
+    final angleDiff = angleToTarget(position, moveTo, angle);
 
     add(
-      RotateEffect.to(
-        angle,
+      RotateEffect.by(
+        angleDiff,
         _rotateController,
       ),
     );
+  }
+
+  static double angleToTarget(Vector2 from, Vector2 to, double currentAngle) {
+    // Вычисляем угол из точки from в точку to с использованием функции atan2.
+    double targetAngle = atan2(to.y - from.y, to.x - from.x);
+
+    // Находим разницу между целевым углом и текущим углом.
+    double angleDifference = targetAngle - currentAngle;
+
+    // Чтобы разница углов была в диапазоне [-π, π], мы нормализуем её.
+    angleDifference = (angleDifference + pi) % (2 * pi) - pi;
+
+    return angleDifference;
   }
 }
